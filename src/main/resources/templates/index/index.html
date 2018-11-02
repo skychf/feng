@@ -1,12 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>上传</title>
-</head>
-<body>
-<form method="post" action="http://127.0.0.1:8080/upload" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="submit" name="">
-</form>
-</body>
-</html>
+- (void)MyPerformWithIndentifier {
+[self.view endEditing:YES];
+if (self.failureCount >= 2 && !self.myTestWord) {
+[self  creatTextWord];
+}
+if(self.myTestWord&&![self.myTestWord.putInTextWord.textisEqualToString:self.testResult]){
+[self creatWarnLabel];
+self.warnLabel.text = @"验证码错误！";
+[self.myTestWord clickChangeValue];
+return;
+}
+
+if(self.passWordText.text.length<=5||self.userNameText.text.length==0){
+[self creatWarnLabel];
+return;
+}
+[MBProgressHUD showMessage:@"正在登录"];
+self.user.username = self.userNameText.text;
+self.user.password = self.passWordText.text;
+[BmobUserloginWithUsernameInBackground:self.user.username password:self.user.password block:^(BmobUser *user, NSError *error) {
+if (!user) {
+[self creatWarnLabel];
+if (self.myTestWord){
+[self.myTestWord clickChangeValue];
+}
+self.failureCount ++;
+[MBProgressHUD hideHUD];
+self.warnLabel.text = @"提示登录时失败，输入错误重新登录";
+return;
+}else{
+self.user.littleName = [user objectForKey:@"littleName"];
+self.user.objectId = user.objectId;
+self.user.userToken =  [user objectForKey:@"userToken"];
+self.user.userPhoto = [user objectForKey:@"userPhoto"];
+[self loginRongCloud];
+}
+}];
+}

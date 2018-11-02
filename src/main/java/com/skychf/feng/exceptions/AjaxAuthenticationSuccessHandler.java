@@ -15,6 +15,14 @@ import java.io.IOException;
 
 @Component
 public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    /**
+     * 用户登录成功
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param authentication
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         User user = (User) authentication.getPrincipal();

@@ -18,8 +18,8 @@ public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse httpServletResponse,
                          AuthenticationException e)
             throws IOException, ServletException {
-//        httpServletResponse.getWriter().write(
-//                new ObjectMapper().writeValueAsString(Result.error("您没有登录", 401))
-//        );
+        httpServletResponse.getWriter().write(
+                new ObjectMapper().writeValueAsString(Result.error("您没有登录", 401))
+        );
     }
 }

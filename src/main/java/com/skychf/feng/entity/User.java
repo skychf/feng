@@ -27,9 +27,15 @@ public class User implements UserDetails {
 
     private String avatar;
 
-    private String diskRoot;
+    private String email;
+
+    private String mobile;
+
+    private String birthday;
 
     private Date createdAt;
+
+    private Date updateAt;
 
     @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name="user_roles", joinColumns = {@JoinColumn(name="userId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})

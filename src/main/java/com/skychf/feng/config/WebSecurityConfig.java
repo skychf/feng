@@ -51,31 +51,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-
                 .httpBasic().authenticationEntryPoint(ajaxAuthenticationEntryPoint)
-
                 .and()
                 .authorizeRequests()
-                .anyRequest().permitAll()
-
-//                .anyRequest().access("@rbacauthorityservice.hasPermission(request,authentication)")
-
+                .antMatchers("/register").permitAll()
+                .anyRequest().access("@rbacauthorityservice.hasPermission(request,authentication)")
                 .and()
                 .formLogin()
                 .successHandler(ajaxAuthenticationSuccessHandler)
                 .failureHandler(ajaxAuthenticationFailureHandler)
                 .permitAll()
-
                 .and()
                 .logout()
                 .logoutSuccessHandler(ajaxLogoutSuccessHandler)
                 .permitAll();
-
         http.exceptionHandling().accessDeniedHandler(ajaxAccessDeniedHandler);
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());

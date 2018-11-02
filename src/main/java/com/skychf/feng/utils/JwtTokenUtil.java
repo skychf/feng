@@ -50,17 +50,4 @@ public class JwtTokenUtil {
         }
         return subject;
     }
-
-    public static Date parseTokenGetExpiration(String token) {
-        Date subject = null;
-        try {
-            Claims claims = Jwts.parser()
-//                    .setSigningKey(salt) // 不使用公钥私钥
-                    .setSigningKey(publicKey)
-                    .parseClaimsJws(token).getBody();
-            subject = claims.getExpiration();
-        } catch (Exception e) {
-        }
-        return subject;
-    }
 }
