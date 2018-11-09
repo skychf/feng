@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -26,5 +27,20 @@ public class UserController {
         User user = userRepository.findByUsername(username);
 
         return Result.success(user);
+    }
+
+    /**
+     * 用户信息
+     * @param id
+     * @return
+     */
+    @GetMapping("user/{id}")
+    public Result show(@PathParam("id") Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return Result.success(user);
+        } else {
+            return Result.error("用户不存在");
+        }
     }
 }

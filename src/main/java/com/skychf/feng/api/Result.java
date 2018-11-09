@@ -38,6 +38,7 @@ public class Result<T> {
     public static Result error(String message) {
         Result result = new Result();
         result.setMessage(message);
+        result.setStatus(400);
         return result;
     }
 
